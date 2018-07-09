@@ -20,10 +20,10 @@ class GaeArtisanConsoleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../../views', 'gae-support-l5');
+        $this->loadViewsFrom(__DIR__ . '/../../views', 'gae-support-l5');
 
-        if (! $this->app->routesAreCached()) {
-            require __DIR__.'/Http/routes.php';
+        if (!$this->app->routesAreCached()) {
+            require __DIR__ . '/Http/routes.php';
         }
     }
 
