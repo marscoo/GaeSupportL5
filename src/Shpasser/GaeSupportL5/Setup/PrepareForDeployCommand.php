@@ -16,20 +16,14 @@ class PrepareForDeployCommand extends Command
 
     public function fire()
     {
-        $this->info('Clearing route cache');
-        Artisan::call('route:clear');
-
-        $this->info('Clearing config cache');
-        Artisan::call('config:clear');
-
-        $this->info('Optimizing');
-        Artisan::call('optimize --force');
-
         $this->info('Caching routes');
-        Artisan::call('route:cache');
+        $this->call('route:cache');
 
         $this->info('Caching config');
-        Artisan::call('config:cache');
+        $this->call('config:cache');
+
+        $this->info('Optimizing');
+        $this->call('optimize --force');
 
         $this->info('Preparing config for GAE');
         $this->fixCachedConfigPaths();
