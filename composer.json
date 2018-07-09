@@ -1,11 +1,15 @@
 {
-  "name": "shpasser/gae-support-l5",
-  "description": "Google App Engine Support for Laravel 5.1 apps.",
+  "name": "erandagan/gae-support-l5",
+  "description": "Google App Engine Support for Laravel 5.2 apps.",
   "license": "MIT",
   "authors": [
     {
       "name": "Ron Shpasser",
       "email": "shpasser@gmail.com"
+    },
+    {
+      "name": "Eran Dagan",
+      "email": "eran.dagan7@gmail.com"
     }
   ],
   "require": {
