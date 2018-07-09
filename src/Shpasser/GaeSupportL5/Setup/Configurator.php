@@ -11,7 +11,6 @@ use Dotenv\Dotenv;
  *
  * @package Shpasser\GaeSupportL5\Setup
  */
-
 class Configurator
 {
     protected $myCommand;
@@ -41,32 +40,30 @@ class Configurator
     public function configure($appId, $generateConfig, $cacheConfig, $bucketId,
                               $dbSocket, $dbName, $dbHost)
     {
-        $env_file               = app_path().'/../.env';
-        $env_production_file    = app_path().'/../.env.production';
-        $env_local_file         = app_path().'/../.env.local';
-        $bootstrap_app_php      = app_path().'/../bootstrap/app.php';
-        $config_app_php         = app_path().'/../config/app.php';
-        $config_view_php        = app_path().'/../config/view.php';
-        $config_queue_php       = app_path().'/../config/queue.php';
-        $config_database_php    = app_path().'/../config/database.php';
-        $config_filesystems_php = app_path().'/../config/filesystems.php';
-        $cached_config_php      = base_path().'/bootstrap/cache/config.php';
+        $env_file = app_path() . '/../.env';
+        $env_production_file = app_path() . '/../.env.production';
+        $env_local_file = app_path() . '/../.env.local';
+        $bootstrap_app_php = app_path() . '/../bootstrap/app.php';
+        $config_app_php = app_path() . '/../config/app.php';
+        $config_queue_php = app_path() . '/../config/queue.php';
+        $config_database_php = app_path() . '/../config/database.php';
+        $config_filesystems_php = app_path() . '/../config/filesystems.php';
+        $cached_config_php = base_path() . '/bootstrap/cache/config.php';
 
         $this->createEnvProductionFile($env_file, $env_production_file, $dbSocket, $dbName);
         $this->createEnvLocalFile($env_file, $env_local_file, $dbHost, $dbName);
         $this->processFile($bootstrap_app_php, ['replaceAppClass']);
         $this->processFile($config_app_php, [
-           'replaceLaravelServiceProviders',
-           'setLogHandler'
+            'replaceLaravelServiceProviders',
+            'setLogHandler'
         ]);
-        $this->processFile($config_view_php, ['replaceCompiledPath']);
         $this->processFile($config_queue_php, ['addQueueConfig']);
         $this->processFile($config_database_php, ['addCloudSqlConfig']);
         $this->processFile($config_filesystems_php, ['addGaeDisk']);
 
         if ($cacheConfig) {
             $env = new Dotenv(dirname($env_production_file),
-                              basename($env_production_file));
+                basename($env_production_file));
             $env->overload();
 
             $result = Artisan::call('config:cache', array());
@@ -76,9 +73,9 @@ class Configurator
         }
 
         if ($generateConfig) {
-            $app_yaml   = app_path().'/../app.yaml';
-            $publicPath = app_path().'/../public';
-            $php_ini    = app_path().'/../php.ini';
+            $app_yaml = app_path() . '/../app.yaml';
+            $publicPath = app_path() . '/../public';
+            $php_ini = app_path() . '/../php.ini';
 
             $this->generateAppYaml($appId, $app_yaml, $publicPath);
             $this->generatePhpIni($appId, $bucketId, $php_ini);
@@ -105,7 +102,7 @@ class Configurator
                 'Overwrite the existing ".env.production" file?', false
             );
 
-            if (! $overwrite) {
+            if (!$overwrite) {
                 return;
             }
         }
@@ -113,27 +110,25 @@ class Configurator
         $env = new EnvHelper;
         $env->read($env_file);
 
-        $env['APP_ENV']   = 'production';
+        $env['APP_ENV'] = 'production';
         $env['APP_DEBUG'] = 'false';
-        $env['APP_LOG']   = 'syslog';
+        $env['APP_LOG'] = 'syslog';
 
-        $env['CACHE_DRIVER']   = 'memcached';
+        $env['CACHE_DRIVER'] = 'memcached';
         $env['SESSION_DRIVER'] = 'memcached';
 
-        $env['MAIL_DRIVER']  = 'gae';
+        $env['MAIL_DRIVER'] = 'gae';
         $env['QUEUE_DRIVER'] = 'gae';
-        $env['FILESYSTEM']   = 'gae';
+        $env['FILESYSTEM'] = 'gae';
 
-        if ((! is_null($dbSocket)) && (! is_null($dbName))) {
+        if ((!is_null($dbSocket)) && (!is_null($dbName))) {
             $env['DB_CONNECTION'] = 'cloudsql';
-            $env['DB_SOCKET']     = $dbSocket;
-            $env['DB_HOST']       = '';
-            $env['DB_DATABASE']   = $dbName;
-            $env['DB_USERNAME']   = 'root';
-            $env['DB_PASSWORD']   = '';
+            $env['DB_SOCKET'] = $dbSocket;
+            $env['DB_HOST'] = '';
+            $env['DB_DATABASE'] = $dbName;
+            $env['DB_USERNAME'] = 'root';
+            $env['DB_PASSWORD'] = '';
         }
-
-        $this->addOptimizerOptions($env);
 
         $env->write($env_production_file);
 
@@ -160,7 +155,7 @@ class Configurator
                 'Overwrite the existing ".env.local" file?', false
             );
 
-            if (! $overwrite) {
+            if (!$overwrite) {
                 return;
             }
         }
@@ -168,47 +163,32 @@ class Configurator
         $env = new EnvHelper;
         $env->read($env_file);
 
-        $env['APP_ENV']   = 'local';
+        $env['APP_ENV'] = 'local';
         $env['APP_DEBUG'] = 'true';
 
-        $env['CACHE_DRIVER']   = 'file';
+        $env['CACHE_DRIVER'] = 'file';
         $env['SESSION_DRIVER'] = 'file';
 
-        if ((! is_null($dbHost)) && (! is_null($dbName))) {
+        if ((!is_null($dbHost)) && (!is_null($dbName))) {
             $env['DB_CONNECTION'] = 'cloudsql';
-            $env['DB_SOCKET']     = '';
-            $env['DB_HOST']       = $dbHost;
-            $env['DB_DATABASE']   = $dbName;
-            $env['DB_USERNAME']   = 'root';
-            $env['DB_PASSWORD']   = 'password';
+            $env['DB_SOCKET'] = '';
+            $env['DB_HOST'] = $dbHost;
+            $env['DB_DATABASE'] = $dbName;
+            $env['DB_USERNAME'] = 'root';
+            $env['DB_PASSWORD'] = 'password';
         }
-
-        $this->addOptimizerOptions($env);
 
         $env->write($env_local_file);
 
         $this->myCommand->info('Created the ".env.local" file.');
     }
 
-    /**
-     * Adds 'Optimizer' options to an environment object.
-     *
-     * @param \Shpasser\GaeSupportL5\Setup\EnvHelper $env
-     * the environment object to modify.
-     */
-    protected function addOptimizerOptions(EnvHelper $env)
-    {
-        $env['CACHE_SERVICES_FILE']  = 'false';
-        $env['CACHE_CONFIG_FILE']    = 'false';
-        $env['CACHE_ROUTES_FILE']    = 'false';
-        $env['CACHE_COMPILED_VIEWS'] = 'false';
-    }
 
     /**
      * Processes a given file with given processors.
      *
-     * @param  string $filePath   the path of the file to be processed.
-     * @param  array  $processors array of processor function names to
+     * @param  string $filePath the path of the file to be processed.
+     * @param  array $processors array of processor function names to
      * be called during the file processing. Every such function shall
      * receive the file contents string as a parameter and return the
      * modified file contents.
@@ -309,35 +289,8 @@ class Configurator
 
         $modified = preg_replace($expression, $replacement, $contents);
 
-        if ($contents !== $modified)
-        {
-            $this->myCommand->info('Set the log handler in "config/app.php".');
-        }
-
-        return $modified;
-    }
-
-    /**
-     * Processor function. Replaces 'compiled' path with GAE
-     * compatible one when running on GAE.
-     *
-     * @param string $contents the 'config/view.php' file contents.
-     * @return string the modified file contents.
-     */
-    protected function replaceCompiledPath($contents)
-    {
-        $expression = "/'compiled'\s*=>\s*(.+(,|(?=\s+\]))|[^,]+(,|(?=\s+\])))/";
-        $replacement =
-<<<EOT
-'compiled' => env('CACHE_COMPILED_VIEWS') ?
-                  Shpasser\GaeSupportL5\Storage\Optimizer::COMPILED_VIEWS_PATH :
-                  storage_path('framework/views'),
-EOT;
-
-        $modified = preg_replace($expression, $replacement, $contents);
-
         if ($contents !== $modified) {
-            $this->myCommand->info('Replaced the \'compiled\' path in "config/view.php".');
+            $this->myCommand->info('Set the log handler in "config/app.php".');
         }
 
         return $modified;
@@ -359,7 +312,7 @@ EOT;
         $expression = "/'connections'\s*=>\s*\[/";
 
         $replacement =
-<<<EOT
+            <<<EOT
 'connections' => [
 
         'gae' => [
@@ -398,7 +351,7 @@ EOT;
 
         $replacements = [
             "'default' => env('DB_CONNECTION', 'mysql')",
-<<<EOT
+            <<<EOT
 'connections' => [
 
         'cloudsql' => [
@@ -445,7 +398,7 @@ EOT
 
         $replacements = [
             "'default' => env('FILESYSTEM', 'local')",
-<<<EOT
+            <<<EOT
 'disks' => [
 
 		'gae' => [
@@ -506,9 +459,9 @@ EOT
 
         if ($this->isRunningOnWindows()) {
             $contents = $this->preprocessWindowsPaths($contents);
-            $app_path     = str_replace('\\', '/', $app_path);
+            $app_path = str_replace('\\', '/', $app_path);
             $storage_path = str_replace('\\', '/', $storage_path);
-            $base_path    = str_replace('\\', '/', $base_path);
+            $base_path = str_replace('\\', '/', $base_path);
             $replaceFunction = 'str_ireplace';
         }
 
@@ -548,14 +501,14 @@ EOT
                 'Overwrite the existing "app.yaml" file?', false
             );
 
-            if (! $overwrite) {
+            if (!$overwrite) {
                 return;
             }
         }
 
         $pathMappings = '';
         foreach (new \DirectoryIterator($publicPath) as $fileInfo) {
-            if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
+            if ($fileInfo->isDot() || !$fileInfo->isDir()) {
                 continue;
             }
 
@@ -567,8 +520,8 @@ EOT
                 continue;
             }
 
-            $pathMappings .= PHP_EOL.
-<<<EOT
+            $pathMappings .= PHP_EOL .
+                <<<EOT
         - url: /{$dirName}
           static_dir: public/{$dirName}
 
@@ -576,7 +529,7 @@ EOT;
         }
 
         $contents =
-<<<EOT
+            <<<EOT
 application:    {$appId}
 version:        1
 runtime:        php55
@@ -626,7 +579,7 @@ EOT;
                 'Overwrite the existing "php.ini" file?', false
             );
 
-            if (! $overwrite) {
+            if (!$overwrite) {
                 return;
             }
         }
@@ -637,7 +590,7 @@ EOT;
         }
 
         $contents =
-<<<EOT
+            <<<EOT
 ; enable function that are disabled by default in the App Engine PHP runtime
 google_app_engine.enable_functions = "php_sapi_name, php_uname, getmypid"
 google_app_engine.allow_include_gs_buckets = "{$storageBucket}"
@@ -670,7 +623,7 @@ EOT;
     protected function backupFile($filePath)
     {
         $sourcePath = $filePath;
-        $backupPath = $filePath.'.bak';
+        $backupPath = $filePath . '.bak';
 
         if (file_exists($backupPath)) {
             $date = new \DateTime();

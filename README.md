@@ -173,50 +173,7 @@ FILESYSTEM = gae
 
 ### Optimizations
 
-The optimizations allow the application to reduce the use of GCS, which is the only read-write
-storage available on GAE platform as of now.
-
-In order to optimize view compilation the included `cachefs` filesystem can be used to store
-compiled views using `memcached` service. `cachefs` does not provide the application with a
-reliable storage solution, information stored using `memcached` is managed according to
-`memcached` rules and may be deleted when `memcached` decides to. Since the views can
-be compiled again without any information loss it is appropriate to store compiled
-views using `cachefs`.
-
-`cachefs` has the following structure:
-
-<pre>
-/
-+-- bootstrap
-    +-- cache
-+-- framework
-    +-- views
-</pre>
-
-'/framework/views' is used to store the compiled views.
-
-Use the following option to enable the feature in `.env.production` and/or `.env.local` file:
-```php
-CACHE_COMPILED_VIEWS = true
-```
-
-'/bootstrap/cache' is used to store the `services.json`, `config.php` and `routes.php` files,
-in order to control caching of these files use the following options in `.env.production` and/or `.env.local` file:
-```php
-CACHE_SERVICES_FILE = true
-CACHE_CONFIG_FILE = true
-CACHE_ROUTES_FILE = true
-```
-
-In order to use `config.php` first generate it using the `--cache-config` option of
-`php artisan gae:setup` command. `routes.php` has to be generated using
-`php artisan route:cache` command.
-
-Cache related options are:
-- supported on GAE and/or in local environment as long as `memcached` service is present,
-- disabled while executing `php artisan gae:setup` command.
-
-Additionally the initialization of GSC bucket can be skipped to boost the performance.
+The initialization of GSC bucket can be skipped to boost the performance.
 In order to do so, set the following option in the `app.yaml` file:
 ```yaml
 env_variables:
