@@ -2,12 +2,12 @@
 
 namespace Shpasser\GaeSupportL5\Mail\Transport;
 
-use Swift_Transport;
-use Swift_Mime_Message;
-use Swift_Events_EventListener;
-use Swift_Attachment;
 use Illuminate\Support\Facades\Log;
 use Shpasser\GaeSupportL5\Foundation\Application;
+use Swift_Attachment;
+use Swift_Events_EventListener;
+use Swift_Mime_Message;
+use Swift_Transport;
 
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message as GAEMessage;
@@ -56,21 +56,21 @@ class GaeTransport implements Swift_Transport
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         try {
-            $to  = implode(', ', array_keys((array) $message->getTo()));
-            $cc  = implode(', ', array_keys((array) $message->getCc()));
-            $bcc = implode(', ', array_keys((array) $message->getBcc()));
+            $to = implode(', ', array_keys((array)$message->getTo()));
+            $cc = implode(', ', array_keys((array)$message->getCc()));
+            $bcc = implode(', ', array_keys((array)$message->getBcc()));
             $replyto = '';
 
-            foreach ((array) $message->getReplyTo() as $address => $name) {
+            foreach ((array)$message->getReplyTo() as $address => $name) {
                 $replyto = $address;
                 break;
             }
 
             $mail_options = [
-                "sender"    => "admin@{$this->app->getGaeAppId()}.appspotmail.com",
-                "to"        => $to,
-                "subject"   => $message->getSubject(),
-                "htmlBody"  => $message->getBody()
+                "sender" => "admin@{$this->app->getGaeAppId()}.appspotmail.com",
+                "to" => $to,
+                "subject" => $message->getSubject(),
+                "htmlBody" => $message->getBody()
             ];
 
             if ($cc !== '') {
@@ -93,7 +93,7 @@ class GaeTransport implements Swift_Transport
             $gae_message = new GAEMessage($mail_options);
             $gae_message->send();
         } catch (InvalidArgumentException $ex) {
-            Log::warning("Exception sending mail: ".$ex);
+            Log::warning("Exception sending mail: " . $ex);
         }
     }
 

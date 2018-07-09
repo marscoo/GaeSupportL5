@@ -3,8 +3,8 @@
 namespace Shpasser\GaeSupportL5\Foundation;
 
 use Illuminate\Foundation\Application as IlluminateApplication;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 class Application extends IlluminateApplication
 {

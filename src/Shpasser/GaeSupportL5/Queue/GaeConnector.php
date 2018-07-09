@@ -2,9 +2,9 @@
 
 namespace Shpasser\GaeSupportL5\Queue;
 
+use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Connectors\ConnectorInterface;
-use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 
 class GaeConnector implements ConnectorInterface
 {
@@ -38,7 +38,7 @@ class GaeConnector implements ConnectorInterface
     /**
      * Establish a queue connection.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return \Illuminate\Queue\QueueInterface
      */
     public function connect(array $config)

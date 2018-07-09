@@ -3,8 +3,8 @@
 namespace Shpasser\GaeSupportL5\Setup;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class SetupCommand extends Command
 {
@@ -49,10 +49,10 @@ class SetupCommand extends Command
     public function fire()
     {
         $dbSocket = $this->option('db-socket');
-        $dbHost   = $this->option('db-host');
-        $dbName   = $this->option('db-name');
+        $dbHost = $this->option('db-host');
+        $dbName = $this->option('db-name');
 
-        if (! is_null($dbName) && (is_null($dbSocket) && is_null($dbHost))) {
+        if (!is_null($dbName) && (is_null($dbSocket) && is_null($dbHost))) {
             $this->error("Option '--db-name' requires at least one of: '--db-socket' OR '--db-host' to be defined.");
             return;
         }
@@ -90,17 +90,17 @@ class SetupCommand extends Command
     {
         return array(
             array('config', null, InputOption::VALUE_NONE,
-                  'Generate "app.yaml" and "php.ini" config files.', null),
+                'Generate "app.yaml" and "php.ini" config files.', null),
             array('cache-config', null, InputOption::VALUE_NONE,
                 'Generate cached Laravel config file for use on Google App Engine.', null),
             array('bucket', null, InputOption::VALUE_REQUIRED,
-                  'Use the specified gs-bucket instead of the default one.', null),
+                'Use the specified gs-bucket instead of the default one.', null),
             array('db-socket', null, InputOption::VALUE_REQUIRED,
-                  'Cloud SQL socket connection string for production environment.', null),
+                'Cloud SQL socket connection string for production environment.', null),
             array('db-name', null, InputOption::VALUE_REQUIRED,
-                  'Cloud SQL database name.', null),
+                'Cloud SQL database name.', null),
             array('db-host', null, InputOption::VALUE_REQUIRED,
-                  'Cloud SQL database host IPv4 address for local environment.', null),
+                'Cloud SQL database host IPv4 address for local environment.', null),
         );
     }
 }

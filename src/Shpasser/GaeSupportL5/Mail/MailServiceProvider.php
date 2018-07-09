@@ -2,7 +2,6 @@
 
 namespace Shpasser\GaeSupportL5\Mail;
 
-use Shpasser\GaeSupportL5\Mail\Transport\GaeTransport;
 use Illuminate\Mail\MailServiceProvider as IlluminateMailServiceProvider;
 
 class MailServiceProvider extends IlluminateMailServiceProvider

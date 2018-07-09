@@ -1,6 +1,6 @@
 <?php
 
-use \Shpasser\GaeSupportL5\Http\Controllers\ArtisanConsoleController;
+use Shpasser\GaeSupportL5\Http\Controllers\ArtisanConsoleController;
 
 
 Route::get('artisan', array('as' => 'artisan',

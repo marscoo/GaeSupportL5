@@ -58,15 +58,15 @@ class GaeAdapter extends Local
         $location = $this->applyPathPrefix($path);
         $this->ensureDirectory(dirname($location));
 
-        if (! $stream = fopen($location, 'w')) {
+        if (!$stream = fopen($location, 'w')) {
             return false;
         }
 
-        while (! feof($resource)) {
+        while (!feof($resource)) {
             fwrite($stream, fread($resource, 1024), 1024);
         }
 
-        if (! fclose($stream)) {
+        if (!fclose($stream)) {
             return false;
         }
 

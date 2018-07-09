@@ -19,7 +19,7 @@ class Listener extends IlluminateQueueListener
      */
     protected function buildWorkerCommand()
     {
-        if (! app()->isRunningOnGae()) {
+        if (!app()->isRunningOnGae()) {
             return parent::buildWorkerCommand();
         }
 

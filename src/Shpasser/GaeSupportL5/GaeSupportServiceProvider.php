@@ -2,11 +2,11 @@
 
 namespace Shpasser\GaeSupportL5;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem as Flysystem;
-use Shpasser\GaeSupportL5\Setup\SetupCommand;
 use Shpasser\GaeSupportL5\Filesystem\GaeAdapter as GaeFilesystemAdapter;
+use Shpasser\GaeSupportL5\Setup\SetupCommand;
 
 class GaeSupportServiceProvider extends ServiceProvider
 {

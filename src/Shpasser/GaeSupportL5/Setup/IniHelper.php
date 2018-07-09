@@ -52,10 +52,10 @@ class IniHelper implements \ArrayAccess
 
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $iniString .= "[{$key}]".PHP_EOL;
+                $iniString .= "[{$key}]" . PHP_EOL;
                 $iniString .= $this->generateIniString($value);
             } else {
-                $iniString .= "{$key}={$value}".PHP_EOL;
+                $iniString .= "{$key}={$value}" . PHP_EOL;
             }
         }
 

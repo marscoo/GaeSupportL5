@@ -3,10 +3,10 @@
 namespace Shpasser\GaeSupportL5\Queue;
 
 use Illuminate\Container\Container;
-use Illuminate\Queue\Jobs\Job;
 use Illuminate\Contracts\Queue\Job as JobContract;
+use Illuminate\Queue\Jobs\Job;
 
-class GaeJob extends Job  implements JobContract
+class GaeJob extends Job implements JobContract
 {
     /**
      * The Gae queue instance.
@@ -32,10 +32,10 @@ class GaeJob extends Job  implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Container\Container  $container
-     * @param  \Shpasser\GaeSupportL5\Queue\GaeQueue  $gaeQueue
-     * @param  object  $job
-     * @param  bool    $pushed
+     * @param  \Illuminate\Container\Container $container
+     * @param  \Shpasser\GaeSupportL5\Queue\GaeQueue $gaeQueue
+     * @param  object $job
+     * @param  bool $pushed
      */
     public function __construct(Container $container,
                                 GaeQueue $gaeQueue,
@@ -85,12 +85,12 @@ class GaeJob extends Job  implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int   $delay
+     * @param  int $delay
      * @return void
      */
     public function release($delay = 0)
     {
-        if (! $this->pushed) {
+        if (!$this->pushed) {
             $this->delete();
         }
 
@@ -100,7 +100,7 @@ class GaeJob extends Job  implements JobContract
     /**
      * Release a pushed job back onto the queue.
      *
-     * @param  int  $delay
+     * @param  int $delay
      * @return void
      */
     protected function recreateJob($delay)

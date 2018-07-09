@@ -3,8 +3,8 @@
 namespace Shpasser\GaeSupportL5\Setup;
 
 
+use Artisan;
 use Illuminate\Console\Command;
-use \Artisan;
 
 class PrepareForDeployCommand extends Command
 {

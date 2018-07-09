@@ -2,11 +2,11 @@
 
 namespace Shpasser\GaeSupportL5\Http\Controllers;
 
+use Artisan;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Illuminate\Http\Request;
-use Artisan;
 
 /**
  * Artisan Console Controller for GAE.
@@ -40,9 +40,9 @@ class ArtisanConsoleController extends Controller
             $command = 'list';
         }
 
-        $output= new BufferedOutput;
+        $output = new BufferedOutput;
 
-        Artisan::handle(new StringInput($command.self::NON_INTERACTIVE), $output);
+        Artisan::handle(new StringInput($command . self::NON_INTERACTIVE), $output);
         $results = $output->fetch();
 
         return view('gae-support-l5::artisan', compact(['command', 'results']));

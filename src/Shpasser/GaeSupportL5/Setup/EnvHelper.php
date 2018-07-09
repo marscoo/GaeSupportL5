@@ -51,7 +51,7 @@ class EnvHelper implements \ArrayAccess
         $envString = "";
 
         foreach ($array as $value) {
-            $envString .= "{$value}".PHP_EOL;
+            $envString .= "{$value}" . PHP_EOL;
         }
 
         return $envString;
@@ -60,8 +60,8 @@ class EnvHelper implements \ArrayAccess
     /**
      * Parses key and value for a given line.
      *
-     * @param  string $line   the line to be parsed.
-     * @param  string &$key   the parsed key.
+     * @param  string $line the line to be parsed.
+     * @param  string &$key the parsed key.
      * @param  string &$value the parsed value.
      * @return boolean true if parsing was successful, false otherwise.
      */
@@ -87,7 +87,7 @@ class EnvHelper implements \ArrayAccess
      */
     protected function findLine($key)
     {
-        $parsedKey   = null;
+        $parsedKey = null;
         $parsedValue = null;
 
         foreach ($this->lines as $index => $line) {
@@ -173,7 +173,7 @@ class EnvHelper implements \ArrayAccess
         $index = $this->findLine($offset);
 
         if ($index > 0) {
-            $parsedKey   = null;
+            $parsedKey = null;
             $parsedValue = null;
 
             $parseOk = $this->parseEnvLine($this->lines[$index], $parsedKey, $parsedValue);

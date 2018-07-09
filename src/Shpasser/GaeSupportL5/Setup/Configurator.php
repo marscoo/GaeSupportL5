@@ -2,9 +2,9 @@
 
 namespace Shpasser\GaeSupportL5\Setup;
 
-use Illuminate\Console\Command;
 use Artisan;
 use Dotenv\Dotenv;
+use Illuminate\Console\Command;
 
 /**
  * Class Configurator
