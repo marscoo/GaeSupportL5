@@ -23,7 +23,7 @@ class PrepareForDeployCommand extends Command
         $this->call('config:cache');
 
         $this->info('Optimizing');
-        $this->call('optimize --force');
+        $this->call('optimize', ['--force']);
 
         $this->info('Preparing config for GAE');
         $this->fixCachedConfigPaths();
