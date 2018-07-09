@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem as Flysystem;
 use Shpasser\GaeSupportL5\Filesystem\GaeAdapter as GaeFilesystemAdapter;
+use Shpasser\GaeSupportL5\Setup\PrepareForDeployCommand;
 use Shpasser\GaeSupportL5\Setup\SetupCommand;
 
 class GaeSupportServiceProvider extends ServiceProvider
@@ -36,11 +37,14 @@ class GaeSupportServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('gae.setup', function ($app) {
+        $this->app->singleton('gae.setup', function () {
             return new SetupCommand;
         });
+        $this->app->singleton('gae.prepare', function () {
+            return new PrepareForDeployCommand;
+        });
 
-        $this->commands('gae.setup');
+        $this->commands(['gae.setup', 'gae.prepare']);
     }
 
     /**
