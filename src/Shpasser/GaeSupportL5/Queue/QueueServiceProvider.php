@@ -33,4 +33,13 @@ class QueueServiceProvider extends LaravelQueueServiceProvider
         });
     }
 
+    protected function registerListener()
+    {
+        $this->registerListenCommand();
+
+        $this->app->singleton('queue.listener', function ($app) {
+            return new Listener($app->basePath());
+        });
+    }
+
 }
