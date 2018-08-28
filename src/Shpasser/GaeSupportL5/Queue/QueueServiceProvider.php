@@ -32,14 +32,4 @@ class QueueServiceProvider extends LaravelQueueServiceProvider
             return new GaeConnector($app['encrypter'], $app['request']);
         });
     }
-
-    protected function registerListener()
-    {
-        $this->registerListenCommand();
-
-        $this->app->singleton('queue.listener', function ($app) {
-            return new Listener($app->basePath());
-        });
-    }
-
 }
